@@ -1,24 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter} from 'react-router-dom';
+import Navbar from './Components/Navbar';
+import AppRouter from './Routes/AppRouter';
+import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
+import { useEffect, useState } from 'react';
+import { HubAddress } from './Constansts/Constants';
+import { Button } from '@mui/material';
+
 
 function App() {
+    const newUser = "newUser";
+    const hello = "hello";
+
+    const[connection, SetConnection] = useState('')
+
+    useEffect(() => {
+        buildConnection();
+
+      },[]);
+      
+  const buildConnection = async () =>{
+    const connection = new HubConnectionBuilder()
+        .withUrl(HubAddress)
+        .configureLogging(LogLevel.Information)
+        .build();
+
+    connection.on("SendMessageAsync", (user, message) => {
+        console.log(message);
+    });
+    
+    await connection.start();
+    await connection.invoke("SendMessageAsync", newUser, hello);
+
+    SetConnection(connection);
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+        <Navbar/>
+        <Button variant='contained' onClick={()=> {connection.invoke("SendMessageAsync", newUser, hello) }}>sdfsd</Button>
+        <AppRouter/>
+    </BrowserRouter>
   );
 }
 
