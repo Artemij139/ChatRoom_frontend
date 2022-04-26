@@ -1,10 +1,19 @@
 import { Button, Container, Grid, TextField } from "@mui/material";
-import { margin } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { buildConnection } from "../Utils/Connection";
+import {Context} from '../index';
 
 const Chat = () => {
-    
+    const {store} = useContext(Context);
     const [fieldValue, setFieldValue] = useState('');
+    
+
+    useEffect(() => {
+        const con =  buildConnection();
+        store.SetConnection(con);
+    },[]);
+
+    
 
     const SendMessage = () => {
         console.log(fieldValue);
