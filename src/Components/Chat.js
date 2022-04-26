@@ -1,25 +1,38 @@
 import { Button, Container, Grid, TextField } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
-import { buildConnection } from "../Utils/Connection";
 import {Context} from '../index';
+import { observer } from "mobx-react-lite";
+import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
+import {HubAddress}  from '../Constansts/Constants';
 
-const Chat = () => {
+const Chat = observer(() => {
+    
     const {store} = useContext(Context);
     const [fieldValue, setFieldValue] = useState('');
-    
+     
+    const CreateConnetion = async () =>{
+        
+        const con =  new HubConnectionBuilder()
+        .withUrl(HubAddress)
+        .configureLogging(LogLevel.Information)
+        .build();   
 
-    useEffect(() => {
-        const con =  buildConnection();
-        store.SetConnection(con);
-    },[]);
+        await con.on("SendMessageAsync", (user, message) => {
+            store.setMessages([...store.getMessages, {user, message} ])
+        });
 
-    
-
-    const SendMessage = () => {
-        console.log(fieldValue);
+        await con.start();    
+        await con.invoke("SendMessageAsync", "Artem", " I Joined Chat!");
+        console.log(store.getMessages);
     }
 
+    useEffect(() => {
+        CreateConnetion();
+    },[]);
+
+  
     return (
+
         <Container>
               <Grid container
                 style={{height: window.innerHeight - 50 }}
@@ -47,7 +60,7 @@ const Chat = () => {
                             onChange ={e=> setFieldValue(e.target.value)}
                         />
                         <Button 
-                            onClick = {SendMessage}
+                           
                             variant="contained" 
                             style={{marginTop: 5}}
                         >Отправить</Button>
@@ -55,5 +68,5 @@ const Chat = () => {
                 </Grid>
         </Container>
     )
-}
+})
 export default Chat;

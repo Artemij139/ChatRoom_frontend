@@ -5,7 +5,7 @@ import {Context} from '../index';
 
 const Navbar = () => {
     const {auth} = useContext(Context);
-    console.log (auth);
+    
     return (
         <AppBar  position="static">
             <Toolbar variant="dense" >
