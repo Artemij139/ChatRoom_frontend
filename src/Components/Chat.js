@@ -4,6 +4,7 @@ import {Context} from '../index';
 import { observer } from "mobx-react-lite";
 import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
 import {HubAddress}  from '../Constansts/Constants';
+import { toJS } from 'mobx';
 
 const Chat = observer(() => {
     
@@ -23,7 +24,8 @@ const Chat = observer(() => {
 
         await con.start();    
         await con.invoke("SendMessageAsync", "Artem", " I Joined Chat!");
-        console.log(store.getMessages);
+        
+        console.log(toJS(store.getMessages));
     }
 
     useEffect(() => {
