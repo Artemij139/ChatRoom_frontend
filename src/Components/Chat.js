@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
 import {HubAddress}  from '../Constansts/Constants';
 import { toJS } from 'mobx';
+import Message from "./Message";
 
 const Chat = observer(() => {
     
@@ -18,8 +19,8 @@ const Chat = observer(() => {
         .configureLogging(LogLevel.Information)
         .build();   
 
-        await con.on("SendMessageAsync", (user, message) => {
-            store.setMessages([...store.getMessages, {user, message} ])
+        await con.on("SendMessageAsync", (userName, message) => {
+            store.setMessages([...store.getMessages, {userName, message} ])
         });
 
         await con.start();    
@@ -47,7 +48,10 @@ const Chat = observer(() => {
                     overflowY: 'auto',
                     marginTop:20
                     }}> 
-                </div>
+                        {store.getMessages.map(message =>
+                            <Message message = {message}/>
+                        )}
+                </div>            
                 <Grid   
                         container
                         direction='column'
