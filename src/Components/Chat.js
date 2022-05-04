@@ -19,14 +19,17 @@ const Chat = observer(() => {
         .configureLogging(LogLevel.Information)
         .build();   
 
-        await con.on("SendMessageAsync", (userName, message) => {
-            store.setMessages([...store.getMessages, {userName, message} ])
+        await con.on("SendMessageAsync", (userName, text) => {
+            store.setMessages([...store.getMessages, {userName, text} ])
         });
 
-        await con.start();    
-        await con.invoke("SendMessageAsync", "Artem", " I Joined Chat!");
+        await con.start();  
         
-        console.log(toJS(store.getMessages));
+        store.setConnection(con);
+    }
+
+    const SendMessage = async () => {
+        await store.getConnection.invoke("SendMessageAsync", store.getUser.name, fieldValue);
     }
 
     useEffect(() => {
@@ -44,7 +47,7 @@ const Chat = observer(() => {
                 <div 
                     style = {{width: '80%', 
                     height: '70vh', 
-                    border: '1px solid DarkOrchid', 
+                    border: '2px solid DarkOrchid', 
                     overflowY: 'auto',
                     marginTop:20
                     }}> 
@@ -66,7 +69,7 @@ const Chat = observer(() => {
                             onChange ={e=> setFieldValue(e.target.value)}
                         />
                         <Button 
-                           
+                            onClick = {SendMessage}
                             variant="contained" 
                             style={{marginTop: 5}}
                         >Отправить</Button>

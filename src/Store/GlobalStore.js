@@ -4,6 +4,7 @@ import {MockMessages} from '../Constansts/MockConstans';
 export default class GlobalStore{
     
     constructor(){
+        this.user = {name: "Artem"}
         this.connection = null
         this.messages = MockMessages
         makeAutoObservable(this)
@@ -23,6 +24,10 @@ export default class GlobalStore{
 
     get getMessages(){
         return this.messages;
+    }
+
+    get getUser(){
+        return this.user;
     }
 
 }

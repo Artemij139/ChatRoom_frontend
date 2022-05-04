@@ -5,10 +5,6 @@ const Message = ({message, userId}) => {
     
     return (
 
-        // <div className='user-message'>
-        //     <div className="message ">{message.text}</div>
-        //     <div className="from-user">{message.userName}</div>
-        // </div>
         <div style={{
                     margin: 10,
                     border: userId === message.uid ? '2px solid DodgerBlue' : '2px solid SlateBlue',
@@ -21,8 +17,7 @@ const Message = ({message, userId}) => {
                 <Grid container justifyContent="flex-end">
                     {/* <Avatar src={message.photoURL}/> */}
                     <div style={{fontSize: 'small'}}>{message.userName}</div>
-                </Grid>
-                        
+                </Grid>   
         </div>
     )}
 
