@@ -4,7 +4,7 @@ import App from './App';
 import GlobalStore from './Store/GlobalStore';
 
 export const Context = createContext(null);
-const auth = true;
+const auth = false;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
