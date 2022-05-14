@@ -32,9 +32,9 @@ const Chat = observer(() => {
         await store.getConnection.invoke("SendMessageAsync", store.getUser.name, fieldValue);
     }
 
-    useEffect(() => {
-        CreateConnetion();
-    },[]);
+    // useEffect(() => {
+    //     CreateConnetion();
+    // },[]);
 
   
     return (

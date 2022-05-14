@@ -5,8 +5,8 @@ import { useContext } from "react";
 import {Context} from '../index';
 
 const AppRouter = () => {
-    const {auth} = useContext(Context);
-    return auth? 
+    const {store} = useContext(Context);
+    return store.isAuth? 
     (
         <Routes>
             {privateRoutes.map(({path, Component})=>

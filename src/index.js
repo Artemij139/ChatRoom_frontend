@@ -4,13 +4,13 @@ import App from './App';
 import GlobalStore from './Store/GlobalStore';
 
 export const Context = createContext(null);
-const auth = false;
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
 
-    <Context.Provider value= {{auth , store: new GlobalStore()}}>
+    <Context.Provider value= {{ store: new GlobalStore()}}>
         <App/>
     </Context.Provider>
     

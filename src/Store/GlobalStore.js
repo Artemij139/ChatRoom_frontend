@@ -7,6 +7,7 @@ export default class GlobalStore{
         this.user = {name: "Artem"}
         this.connection = null
         this.messages = MockMessages
+        this.isAuth = false
         makeAutoObservable(this)
     }
 
@@ -28,6 +29,14 @@ export default class GlobalStore{
 
     get getUser(){
         return this.user;
+    }
+
+    setIsAuth(bool){
+        this.isAuth =bool;
+    }
+
+    setUser(user){
+        this.user = user;
     }
 
 }

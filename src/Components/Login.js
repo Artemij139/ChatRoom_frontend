@@ -1,15 +1,16 @@
-import { Container , Grid, Button, TextField} from "@mui/material";
+import { Container , Grid, Button, } from "@mui/material";
 import { Box } from "@mui/system";
-import { useContext, useState } from "react";
-import { userLogin } from "../http/UserApi";
-import {Context} from '../index';
+import { Context } from "../index";
+import { getAccessTokenAsync, oidcManager } from "../Constansts/Constants";
+import { useContext } from "react";
+import { TestFunc } from "../http/UserApi";
+
+
 
 const Login = () => {
 
-    const {auth} = useContext(Context);
-    const [showForm, setShowForm] = useState(false);
-    const [loginData, setLoginData] = useState({Name:'', Password:''});
-    
+    const UserLogin = () => oidcManager.signinRedirect() ;
+    const {store} = useContext(Context);
 
     return (
         <Container>
@@ -21,11 +22,18 @@ const Login = () => {
                  <Grid style ={{width:400, border: 'DarkOrchid 2px solid', background: 'Azure'}}>
                     <Box p={5}>
                         <Button   color = 'secondary' variant="contained">Войти с помощью Google</Button>
-                        <Box mt={1}>    
+                        {/* <Box mt={1}>    
                            {!showForm?<Button  onClick = {()=>setShowForm(true)} color = 'primary' variant="contained">Войти</Button>:
-                           <Button  onClick = {()=>{userLogin(loginData) }} color = 'primary' variant="contained">Подтвердить</Button>} 
+                           <Button  onClick = {()=>{userLogin(loginData);setShowForm(false) }} color = 'primary' variant="contained">Подтвердить</Button>} 
+                        </Box> */}
+                        <Box mt={1}>    
+                           <Button  onClick = {UserLogin} color = 'primary' variant="contained">Войти</Button>
                         </Box>
-                     {showForm&&
+                        <Box mt={1}>    
+                           <Button  onClick = {TestFunc} color = 'primary' variant="contained">Токен</Button>
+                        </Box>
+                        
+                     {/* {showForm&&
                             <Box  mt= {2}>
                                 <TextField 
                                     size = 'small' 
@@ -47,10 +55,8 @@ const Login = () => {
                                     onChange = {e=> setLoginData({...loginData, Password: e.target.value})}
                                 />
                             </Box >
-                        }   
+                        }    */}
                     </Box>
-                    
-                    
                  </Grid>
             </Grid>
         </Container>

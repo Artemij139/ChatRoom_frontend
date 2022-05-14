@@ -1,7 +1,22 @@
 import axios from "axios"
-import { LoginAddress } from "../Constansts/Constants"
+import { getAccessTokenAsync, LoginAddress, } from "../Constansts/Constants"
 
 
-export const userLogin = async (data) => {
-    await axios.post(LoginAddress, data);
+const $authHost = axios.create({
+    baseUrl: LoginAddress
+})
+
+
+
+const authInterceptor = async config => {
+    config.headers.authorization = `Bearer ${await getAccessTokenAsync()}`
+    return config
+}
+
+$authHost.interceptors.request.use(authInterceptor)
+
+
+export const TestFunc = async () => {
+    const data = await $authHost.get('api/user/registration')
+    console.log(data);
 }
