@@ -2,39 +2,47 @@ import { Button, Container, Grid, TextField } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import {Context} from '../index';
 import { observer } from "mobx-react-lite";
-import {HubConnectionBuilder, LogLevel} from '@microsoft/signalr';
-import {HubAddress}  from '../Constansts/Constants';
-import { toJS } from 'mobx';
+import {HubConnectionBuilder, LogLevel, HttpTransportType} from '@microsoft/signalr';
+import { HubAddress}  from '../Routes/RoutesConsts';
 import Message from "./Message";
+import { v4 as uuidv4 } from 'uuid';
+import { getRefreshTokenAsync } from "../OpenIdManage/OpenIdApi";
+
 
 const Chat = observer(() => {
-    
+   
     const {store} = useContext(Context);
     const [fieldValue, setFieldValue] = useState('');
      
     const CreateConnetion = async () =>{
         
         const con =  new HubConnectionBuilder()
-        .withUrl(HubAddress)
+        .withUrl(HubAddress,    
+        {   
+            skipNegotiation: true,
+		    transport: HttpTransportType.WebSockets,
+            accessTokenFactory: () => {
+                return store.getUser.access_token                                       
+             }
+        })
         .configureLogging(LogLevel.Information)
         .build();   
+        await con.start();
 
         await con.on("SendMessageAsync", (userName, text) => {
             store.setMessages([...store.getMessages, {userName, text} ])
         });
 
-        await con.start();  
-        
         store.setConnection(con);
     }
 
     const SendMessage = async () => {
-        await store.getConnection.invoke("SendMessageAsync", store.getUser.name, fieldValue);
+        await store.getConnection.invoke("SendMessageAsync", store.getUser.profile.name, fieldValue);
     }
 
-    // useEffect(() => {
-    //     CreateConnetion();
-    // },[]);
+    useEffect(() => {
+        CreateConnetion();
+    },[]);
 
   
     return (
@@ -52,7 +60,7 @@ const Chat = observer(() => {
                     marginTop:20
                     }}> 
                         {store.getMessages.map(message =>
-                            <Message message = {message}/>
+                            <Message key ={uuidv4()} message = {message}/>
                         )}
                 </div>            
                 <Grid   
@@ -73,6 +81,12 @@ const Chat = observer(() => {
                             variant="contained" 
                             style={{marginTop: 5}}
                         >Отправить</Button>
+
+                        <Button 
+                            onClick = {getRefreshTokenAsync}
+                            variant="contained" 
+                            style={{marginTop: 5}}
+                        >Токен</Button>
                     </Grid>
                 </Grid>
         </Container>

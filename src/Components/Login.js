@@ -1,16 +1,16 @@
 import { Container , Grid, Button, } from "@mui/material";
 import { Box } from "@mui/system";
 import { Context } from "../index";
-import { getAccessTokenAsync, oidcManager } from "../Constansts/Constants";
+import { getAccessTokenAsync, oidcManager } from "../OpenIdManage/OpenIdApi";
 import { useContext } from "react";
-import { TestFunc } from "../http/UserApi";
+
 
 
 
 const Login = () => {
 
     const UserLogin = () => oidcManager.signinRedirect() ;
-    const {store} = useContext(Context);
+    
 
     return (
         <Container>
@@ -29,9 +29,7 @@ const Login = () => {
                         <Box mt={1}>    
                            <Button  onClick = {UserLogin} color = 'primary' variant="contained">Войти</Button>
                         </Box>
-                        <Box mt={1}>    
-                           <Button  onClick = {TestFunc} color = 'primary' variant="contained">Токен</Button>
-                        </Box>
+                        
                         
                      {/* {showForm&&
                             <Box  mt= {2}>

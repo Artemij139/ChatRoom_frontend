@@ -3,9 +3,8 @@ import { getAccessTokenAsync, LoginAddress, } from "../Constansts/Constants"
 
 
 const $authHost = axios.create({
-    baseUrl: LoginAddress
+    baseURL: 'https://localhost:7240/'
 })
-
 
 
 const authInterceptor = async config => {
@@ -16,7 +15,7 @@ const authInterceptor = async config => {
 $authHost.interceptors.request.use(authInterceptor)
 
 
-export const TestFunc = async () => {
-    const data = await $authHost.get('api/user/registration')
+export const TestFuncx = async () => {
+    const data = await $authHost.get('values')
     console.log(data);
 }

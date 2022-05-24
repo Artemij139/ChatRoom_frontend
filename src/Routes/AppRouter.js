@@ -3,26 +3,25 @@ import { privateRoutes } from './Routes';
 import { publicRoutes } from './Routes';
 import { useContext } from "react";
 import {Context} from '../index';
+import { observer } from 'mobx-react-lite';
 
-const AppRouter = () => {
+
+
+const AppRouter = observer(() => {
+
     const {store} = useContext(Context);
-    return store.isAuth? 
-    (
-        <Routes>
-            {privateRoutes.map(({path, Component})=>
-                <Route key = {path }  path = {path} element = {<Component/>} exact = {true}/>
-            )}
-            <Route path="*" element={<Navigate replace to="/chat" />} />
-        </Routes>
-    ) :
-    (
-        <Routes>
-             {publicRoutes.map(({path, Component})=>
-                <Route  key = {path } path = {path} element ={<Component/>} exact = {true}/>
-            )}
-             <Route path="*" element={<Navigate replace to="/login" />} />
-        </Routes>
-    ) 
-    
-}
+    console.log(store.getAuth)
+        return  (
+            <Routes>
+             {store.getAuth&&privateRoutes.map(({path, Component})=>
+                    <Route key = {path}  path = {path} element = {<Component/>} />
+                )}
+               
+            
+                 {publicRoutes.map(({path, Component})=>
+                    <Route  key = {path} path = {path} element ={<Component/>} />
+                )}
+            </Routes>
+        )
+})
 export default AppRouter;

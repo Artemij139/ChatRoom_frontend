@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import {MockMessages} from '../Constansts/MockConstans';
+import {MockMessages} from '../OpenIdManage/MockConstans';
 
 export default class GlobalStore{
     
@@ -29,6 +29,10 @@ export default class GlobalStore{
 
     get getUser(){
         return this.user;
+    }
+
+    get getAuth(){
+        return this.isAuth;
     }
 
     setIsAuth(bool){
