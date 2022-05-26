@@ -4,7 +4,7 @@ import {MockMessages} from '../OpenIdManage/MockConstans';
 export default class GlobalStore{
     
     constructor(){
-        this.user = {name: "Artem"}
+        this.user = null
         this.connection = null
         this.messages = MockMessages
         this.isAuth = false
@@ -29,14 +29,6 @@ export default class GlobalStore{
 
     get getUser(){
         return this.user;
-    }
-
-    get getAuth(){
-        return this.isAuth;
-    }
-
-    setIsAuth(bool){
-        this.isAuth =bool;
     }
 
     setUser(user){

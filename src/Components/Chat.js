@@ -14,16 +14,15 @@ const Chat = observer(() => {
     const {store} = useContext(Context);
     const [fieldValue, setFieldValue] = useState('');
      
-    const CreateConnetion = async () =>{
+    const CreateConnetion = async (hoba) =>{
         
         const con =  new HubConnectionBuilder()
         .withUrl(HubAddress,    
         {   
             skipNegotiation: true,
 		    transport: HttpTransportType.WebSockets,
-            accessTokenFactory: () => {
-                return store.getUser.access_token                                       
-             }
+            accessTokenFactory: ()=>{ return hoba? hoba: store.getUser.access_token}                         
+            
         })
         .configureLogging(LogLevel.Information)
         .build();   
@@ -41,7 +40,13 @@ const Chat = observer(() => {
     }
 
     useEffect(() => {
-        CreateConnetion().catch(()=>getRefreshTokenAsync()).then(user=>store.setUser(user)).then(()=>CreateConnetion());
+        CreateConnetion()
+        .catch(
+            ()=>{
+                getRefreshTokenAsync().then((user)=>CreateConnetion(user.access_token)); 
+            }
+        )
+        
     },[]);
 
   
@@ -83,7 +88,9 @@ const Chat = observer(() => {
                         >Отправить</Button>
 
                         <Button 
-                            onClick = {getRefreshTokenAsync}
+                            onClick = { ()=>{
+                                getRefreshTokenAsync().then(()=>CreateConnetion());  
+                            }}
                             variant="contained" 
                             style={{marginTop: 5}}
                         >Токен</Button>

@@ -4,16 +4,20 @@ import {  oidcCallBackManager } from "../OpenIdApi";
 
 
 const CallBack = () => {
- 
+    
     useEffect(() => {
         oidcCallBackManager.signinRedirectCallback()
-            .then(()=>{window.location = ChatPage})
-              
-     },[]);
-
+            .then(
+                (user)=>{
+                    console.log(user);
+                    window.location = ChatPage
+                }
+                )
+                .catch(e=>console.log(e));
+    },[]);
     return (
         <>
-       
+            callback
         </>
     )
 }

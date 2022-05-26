@@ -12,7 +12,7 @@ const AppRouter = observer(() => {
 
     const {store} = useContext(Context);
     
-        return store.getAuth? 
+        return store.getUser? 
         (
             <Routes>
                  {privateRoutes.map(({path, Component})=>

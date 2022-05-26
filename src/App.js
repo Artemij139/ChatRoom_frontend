@@ -14,18 +14,14 @@ const App = observer(() => {
     const {store} = useContext(Context);
     const [loading, setLoading] = useState(true);
 
-    console.log(store.getAuth)
-    
-
     useEffect(() => {
         oidcManager.getUser()
         .then( user => 
             { 
                 if(user){
                     store.setUser(user);
-                    store.setIsAuth(true);  
                     setLoading(false);
-                    console.log(user);
+                    
                 }
                 else
                 {
@@ -42,7 +38,7 @@ const App = observer(() => {
 
     return (
             <BrowserRouter>
-             {store.getAuth&&<Navbar/>}   
+             {store.getUser&&<Navbar/>}   
                 <AppRouter/>
             </BrowserRouter>
     );
