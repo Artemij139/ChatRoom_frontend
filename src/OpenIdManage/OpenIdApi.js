@@ -17,8 +17,8 @@ export const oidcManager = new Oidc.UserManager({
 });
 
 export const  getRefreshTokenAsync  = async () => {
-    await oidcManager.signinSilent().then(user=> console.log(user,"refreshed")).catch(e=>e, "Нихуя");
-
+   const user = await oidcManager.signinSilent();
+   return user;
 } 
 
 export const  getAccessTokenAsync  = async () => {

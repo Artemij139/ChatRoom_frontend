@@ -6,7 +6,7 @@ import {HubConnectionBuilder, LogLevel, HttpTransportType} from '@microsoft/sign
 import { HubAddress}  from '../Routes/RoutesConsts';
 import Message from "./Message";
 import { v4 as uuidv4 } from 'uuid';
-import { getRefreshTokenAsync } from "../OpenIdManage/OpenIdApi";
+import { getRefreshTokenAsync, oidcManager } from "../OpenIdManage/OpenIdApi";
 
 
 const Chat = observer(() => {
@@ -41,7 +41,7 @@ const Chat = observer(() => {
     }
 
     useEffect(() => {
-        CreateConnetion();
+        CreateConnetion().catch(()=>getRefreshTokenAsync()).then(user=>store.setUser(user)).then(()=>CreateConnetion());
     },[]);
 
   

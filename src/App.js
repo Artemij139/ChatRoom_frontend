@@ -18,20 +18,22 @@ const App = observer(() => {
     
 
     useEffect(() => {
-        oidcManager.getUser().
-        then( user => 
+        oidcManager.getUser()
+        .then( user => 
             { 
                 if(user){
                     store.setUser(user);
                     store.setIsAuth(true);  
                     setLoading(false);
+                    console.log(user);
                 }
                 else
                 {
                     console.log("not login");
+                    setLoading(false);
                 }
 
-            })
+            }).catch((e)=>console.log(e))
     },[]);
 
     if (loading) {
