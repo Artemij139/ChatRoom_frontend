@@ -17,7 +17,7 @@ const CallBack = () => {
     },[]);
     return (
         <>
-            callback
+            
         </>
     )
 }
