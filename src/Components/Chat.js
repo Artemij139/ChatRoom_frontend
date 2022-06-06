@@ -15,7 +15,7 @@ const Chat = observer(() => {
     const [fieldValue, setFieldValue] = useState('');
     const [allUsers, setAllUsers] = useState([]);
     
-    
+    console.log(allUsers);
     const CreateConnetion = async (hoba) =>{
         
         const con =  new HubConnectionBuilder()
@@ -35,7 +35,7 @@ const Chat = observer(() => {
         });
 
         await con.on("UpdateUsersAsync", (users) => {
-            console.log(users);
+            setAllUsers([...allUsers, ...users])
         });
 
         store.setConnection(con);
@@ -74,12 +74,25 @@ const Chat = observer(() => {
                         {store.getMessages.map(message =>
                             <Message key ={uuidv4()} message = {message}/>
                         )}
-                </div>            
+                </div> 
+                <div 
+                    style = {{width: '10%', 
+                    height: '70vh', 
+                    border: '1px solid #1976d2', 
+                    overflowY: 'auto',
+                    marginTop:20,
+                    marginLeft:5,
+                    padding:10
+                    }}> 
+                        {allUsers&&allUsers.map(user =>
+                            <li style={{listStyleType:'circle'}}>{user}</li>
+                        )}
+                </div>                   
                 <Grid   
                         container
                         direction='column'
                         alignItems='flex-end'
-                        style={{width:'80%'}}
+                        style={{width:'90%'}}
                     >
                         <TextField 
                             fullWidth
