@@ -12,7 +12,8 @@ export const oidcManager = new Oidc.UserManager({
     scope:"openid profile chatHub",
     redirect_uri: LoginRedirect,
     silent_redirect_uri: SilentLoginRedirect,
-    post_logout_redirect_uri: LoginPage
+    post_logout_redirect_uri: LoginPage,
+    loadUserInfo: true
     
 });
 
@@ -39,3 +40,5 @@ export const oidcCallBackManager = new Oidc.UserManager({
 });
 
 export const RefreshCallBackManager = new Oidc.UserManager();
+
+

@@ -6,14 +6,16 @@ import {HubConnectionBuilder, LogLevel, HttpTransportType} from '@microsoft/sign
 import { HubAddress}  from '../Routes/RoutesConsts';
 import Message from "./Message";
 import { v4 as uuidv4 } from 'uuid';
-import { getRefreshTokenAsync, oidcManager } from "../OpenIdManage/OpenIdApi";
+import { getRefreshTokenAsync } from "../OpenIdManage/OpenIdApi";
 
 
 const Chat = observer(() => {
    
     const {store} = useContext(Context);
     const [fieldValue, setFieldValue] = useState('');
-     
+    const [allUsers, setAllUsers] = useState([]);
+    
+    
     const CreateConnetion = async (hoba) =>{
         
         const con =  new HubConnectionBuilder()
@@ -32,12 +34,17 @@ const Chat = observer(() => {
             store.setMessages([...store.getMessages, {userName, text} ])
         });
 
+        await con.on("UpdateUsersAsync", (users) => {
+            console.log(users);
+        });
+
         store.setConnection(con);
     }
 
     const SendMessage = async () => {
         await store.getConnection.invoke("SendMessageAsync", store.getUser.profile.name, fieldValue);
     }
+
 
     useEffect(() => {
         CreateConnetion()
@@ -89,7 +96,7 @@ const Chat = observer(() => {
 
                         <Button 
                             onClick = { ()=>{
-                                getRefreshTokenAsync().then(()=>CreateConnetion());  
+                                console.log(store.getUser.access_token);  
                             }}
                             variant="contained" 
                             style={{marginTop: 5}}

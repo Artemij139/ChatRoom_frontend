@@ -21,7 +21,7 @@ const App = observer(() => {
                 if(user){
                     store.setUser(user);
                     setLoading(false);
-                    
+                    console.log(user);
                 }
                 else
                 {

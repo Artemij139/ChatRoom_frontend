@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import {MockMessages} from '../OpenIdManage/MockConstans';
+import {MockMessages} from '../OpenIdManage/Constans';
 
 export default class GlobalStore{
     
