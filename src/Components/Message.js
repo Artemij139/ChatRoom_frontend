@@ -1,14 +1,19 @@
 
 import { Grid, Avatar } from "@mui/material";
 import './Components.css';
-const Message = ({message, userId}) => {
-    
+import {Context} from '../index';
+import {  useContext } from "react";
+import { observer } from "mobx-react-lite";
+
+const Message = observer(({message}) => {
+    const {store} = useContext(Context);  
+   
     return (
 
         <div style={{
                     margin: 10,
-                    border: userId === message.uid ? '2px solid DodgerBlue' : '2px solid SlateBlue',
-                    marginLeft: userId === message.uid ? 'auto' : '10px',
+                    border: message.userName === store.getUser.profile.name ? '2px solid DodgerBlue' : '2px solid SlateBlue',
+                    marginLeft: message.userName === store.getUser.profile.name ? 'auto' : '10px',
                     width: 'fit-content',
                     padding: 5,
                 }}>
@@ -19,6 +24,6 @@ const Message = ({message, userId}) => {
                     <div style={{fontSize: 'small'}}>{message.userName}</div>
                 </Grid>   
         </div>
-    )}
+    )})
 
 export default Message;

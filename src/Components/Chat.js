@@ -7,7 +7,7 @@ import { HubAddress}  from '../Routes/RoutesConsts';
 import Message from "./Message";
 import { v4 as uuidv4 } from 'uuid';
 import { getRefreshTokenAsync } from "../OpenIdManage/OpenIdApi";
-
+import { toJS } from 'mobx'
 
 const Chat = observer(() => {
    
@@ -16,6 +16,7 @@ const Chat = observer(() => {
     const [allUsers, setAllUsers] = useState([]);
     
     console.log(allUsers);
+    console.log(toJS(store.getMessages));
     const CreateConnetion = async (hoba) =>{
         
         const con =  new HubConnectionBuilder()
@@ -35,7 +36,8 @@ const Chat = observer(() => {
         });
 
         await con.on("UpdateUsersAsync", (users) => {
-            setAllUsers([...allUsers, ...users])
+            setAllUsers(users)
+            console.log(users);
         });
 
         store.setConnection(con);
@@ -55,8 +57,8 @@ const Chat = observer(() => {
         )
         
     },[]);
-
   
+ 
     return (
 
         <Container>
@@ -84,8 +86,8 @@ const Chat = observer(() => {
                     marginLeft:5,
                     padding:10
                     }}> 
-                        {allUsers&&allUsers.map(user =>
-                            <li style={{listStyleType:'circle'}}>{user}</li>
+                        {allUsers.map((user,index) =>
+                            <li key ={index} style={{listStyleType:'circle'}}>{user}</li>
                         )}
                 </div>                   
                 <Grid   
