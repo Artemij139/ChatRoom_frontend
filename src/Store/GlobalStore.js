@@ -6,7 +6,7 @@ export default class GlobalStore{
     constructor(){
         this.user = null
         this.connection = null
-        this.messages = MockMessages
+        this.messages = []
         this.isAuth = false
         makeAutoObservable(this)
     }

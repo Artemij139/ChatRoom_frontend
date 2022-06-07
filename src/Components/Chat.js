@@ -40,6 +40,11 @@ const Chat = observer(() => {
             console.log(users);
         });
 
+        await con.on("UpdateMessagesAsync", (mess) => {
+            store.setMessages(mess)
+            console.log(mess);
+        });
+
         store.setConnection(con);
     }
 
@@ -74,13 +79,13 @@ const Chat = observer(() => {
                     marginTop:20
                     }}> 
                         {store.getMessages.map(message =>
-                            <Message key ={uuidv4()} message = {message}/>
+                            <Message key ={message.id} message = {message}/>
                         )}
                 </div> 
                 <div 
                     style = {{width: '10%', 
                     height: '70vh', 
-                    border: '1px solid #1976d2', 
+                    border: '2px solid #1976d2', 
                     overflowY: 'auto',
                     marginTop:20,
                     marginLeft:5,
