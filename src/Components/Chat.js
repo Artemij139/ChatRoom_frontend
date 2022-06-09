@@ -83,7 +83,7 @@ const Chat = observer(() => {
                         )}
                 </div> 
                 <div 
-                    style = {{width: '10%', 
+                    style = {{width: '15%', 
                     height: '70vh', 
                     border: '2px solid #1976d2', 
                     overflowY: 'auto',
@@ -99,7 +99,7 @@ const Chat = observer(() => {
                         container
                         direction='column'
                         alignItems='flex-end'
-                        style={{width:'90%'}}
+                        style={{width:'95%'}}
                     >
                         <TextField 
                             fullWidth
