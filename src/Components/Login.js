@@ -19,41 +19,17 @@ const Login = () => {
                 alignItems="center"
                 justifyContent="center"
             >    
-                 <Grid style ={{width:400, border: 'DarkOrchid 2px solid', background: 'Azure'}}>
-                    <Box p={5}>
-                        <Button   color = 'secondary' variant="contained">Войти с помощью Google</Button>
-                        {/* <Box mt={1}>    
-                           {!showForm?<Button  onClick = {()=>setShowForm(true)} color = 'primary' variant="contained">Войти</Button>:
-                           <Button  onClick = {()=>{userLogin(loginData);setShowForm(false) }} color = 'primary' variant="contained">Подтвердить</Button>} 
-                        </Box> */}
-                        <Box mt={1}>    
-                           <Button  onClick = {UserLogin} color = 'primary' variant="contained">Войти</Button>
-                        </Box>
-                        
-                        
-                     {/* {showForm&&
-                            <Box  mt= {2}>
-                                <TextField 
-                                    size = 'small' 
-                                    id="outlined-basic" 
-                                    label="Username" 
-                                    variant="outlined"  
-                                    style={{marginBottom:5}}
-                                    value ={loginData.username}
-                                    onChange ={e=> setLoginData({...loginData, Name: e.target.value})}
-                                   
-                                />
-                                <TextField 
-                                    size = 'small' 
-                                    type ="password"
-                                    id="outlined-basic" 
-                                    label="Password" 
-                                    variant="outlined" 
-                                    value ={loginData.password}
-                                    onChange = {e=> setLoginData({...loginData, Password: e.target.value})}
-                                />
-                            </Box >
-                        }    */}
+                 <Grid 
+                    container
+                    alignItems="center"
+                    justifyContent="center"
+                    style = {{
+                            width:400,
+                            border: 'DarkOrchid 2px solid',
+                            background: 'Azure',
+                        }}>
+                    <Box p={3}>
+                         <Button  onClick = {UserLogin} color = 'secondary' variant="contained">Войти</Button>
                     </Box>
                  </Grid>
             </Grid>

@@ -16,6 +16,7 @@ const Message = observer(({message}) => {
                     marginLeft: message.userName === store.getUser.profile.name ? 'auto' : '10px',
                     width: 'fit-content',
                     padding: 5,
+                    color: message.userName === store.getUser.profile.name ? '2px solid DodgerBlue' : '2px solid SlateBlue',
                 }}>
                 
                 <div>{message.text}</div>

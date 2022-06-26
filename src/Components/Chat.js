@@ -71,30 +71,30 @@ const Chat = observer(() => {
                 style={{height: window.innerHeight - 50 }}
                 justifyContent="center"
               >    
-                <div 
-                    style = {{width: '80%', 
-                    height: '70vh', 
-                    border: '2px solid DarkOrchid', 
-                    overflowY: 'auto',
-                    marginTop:20
-                    }}> 
-                        {store.getMessages.map(message =>
-                            <Message key ={message.id} message = {message}/>
-                        )}
-                </div> 
-                <div 
-                    style = {{width: '15%', 
-                    height: '70vh', 
-                    border: '2px solid #1976d2', 
-                    overflowY: 'auto',
-                    marginTop:20,
-                    marginLeft:5,
-                    padding:10
-                    }}> 
-                        {allUsers.map((user,index) =>
-                            <li key ={index} style={{listStyleType:'circle'}}>{user}</li>
-                        )}
-                </div>                   
+                    <div 
+                        style = {{width: '80%', 
+                        height: '70vh', 
+                        border: '2px solid DarkOrchid', 
+                        overflowY: 'auto',
+                        marginTop:20
+                        }}> 
+                            {store.getMessages.map(message =>
+                                <Message key ={message.id} message = {message}/>
+                            )}
+                    </div> 
+                    <div 
+                        style = {{width: '15%', 
+                        height: '70vh', 
+                        border: '2px solid #1976d2', 
+                        overflowY: 'auto',
+                        marginTop:20,
+                        marginLeft:5,
+                        padding:10
+                        }}> 
+                            {allUsers.map((user,index) =>
+                                <li key ={index} style={{listStyleType:'circle'}}>{user}</li>
+                            )}
+                    </div>                   
                 <Grid   
                         container
                         direction='column'
@@ -114,13 +114,13 @@ const Chat = observer(() => {
                             style={{marginTop: 5}}
                         >Отправить</Button>
 
-                        <Button 
+                        {/* <Button 
                             onClick = { ()=>{
                                 console.log(store.getUser.access_token);  
                             }}
                             variant="contained" 
                             style={{marginTop: 5}}
-                        >Токен</Button>
+                        >Токен</Button> */}
                     </Grid>
                 </Grid>
         </Container>
